@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<root>
+  <mode>diffuse</mode>
+  <rad>69</rad>
+  <sld_start>10</sld_start>
+  <sld_end>2</sld_end>
+  <sld_env>0</sld_env>
+  <d_coeff>0.1</d_coeff>
+  <qclean_sld>0</qclean_sld>
+</root>
