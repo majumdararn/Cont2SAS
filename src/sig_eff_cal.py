@@ -253,42 +253,43 @@ for i, t in enumerate(t_arr):
         wq[q_cat_idx]=len(pixel_Q[(pixel_Q >= cat_low_bound) & (pixel_Q <= cat_upper_bound)])
         w_cat[(pixel_Q >= cat_low_bound) & (pixel_Q <= cat_upper_bound)]=wq[q_cat_idx]
 
-    # plotitng I vs Q in time folder
-    plt.scatter(pixel_coord_det[:,0], pixel_coord_det[:,1], c=w_cat, cmap='viridis_r', s=1)
-    plt.axis('equal')
-    plt.xlabel('x [$m$]')
-    plt.ylabel('y [$m$]')
-    plt.colorbar(label='categorized q values')
-    beam_stop = patches.Rectangle(((nx_det*dx_det-bs_wx_det)/2, (nx_det*dy_det-bs_wy_det)/2),
-                                   0.085, 0.085, color='orange', fill=True)
-    plt.gca().add_patch(beam_stop)
-    outercircle_out = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2),
-                                      np.sqrt((nx_det*dx_det/2)**2+(ny_det*dy_det/2)**2),
+    if i==0:
+        # plotitng I vs Q in time folder
+        plt.scatter(pixel_coord_det[:,0], pixel_coord_det[:,1], c=w_cat, cmap='viridis_r', s=1)
+        plt.axis('equal')
+        plt.xlabel('x [$m$]')
+        plt.ylabel('y [$m$]')
+        plt.colorbar(label='categorized q values')
+        beam_stop = patches.Rectangle(((nx_det*dx_det-bs_wx_det)/2, (nx_det*dy_det-bs_wy_det)/2),
+                                    0.085, 0.085, color='orange', fill=True)
+        plt.gca().add_patch(beam_stop)
+        outercircle_out = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2),
+                                        np.sqrt((nx_det*dx_det/2)**2+(ny_det*dy_det/2)**2),
+                                            color='r', fill=False)
+        outercircle_in = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2),
+                                        (nx_det*dx_det/2),
                                         color='r', fill=False)
-    outercircle_in = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2),
-                                     (nx_det*dx_det/2),
-                                       color='r', fill=False)
-    plt.gca().add_patch(outercircle_out)
-    plt.gca().add_patch(outercircle_in)
-    innercircle_out = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2),
-                                      np.sqrt((bs_wx_det/2)**2+(bs_wy_det/2)**2),
+        plt.gca().add_patch(outercircle_out)
+        plt.gca().add_patch(outercircle_in)
+        innercircle_out = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2),
+                                        np.sqrt((bs_wx_det/2)**2+(bs_wy_det/2)**2),
+                                            color='k', fill=False)
+        innercircle_in = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2),
+                                        (bs_wx_det/2),
                                         color='k', fill=False)
-    innercircle_in = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2),
-                                     (bs_wx_det/2),
-                                       color='k', fill=False)
-    plt.gca().add_patch(innercircle_out)
-    plt.gca().add_patch(innercircle_in)
-    fig_org=[(nx_det*dx_det)/2, (nx_det*dy_det)/2]
-    fig_diag_len=np.sqrt((nx_det*dx_det)**2+(ny_det*dy_det)**2)
-    fig_pad=0.05*fig_diag_len/2
-    plt.xlim([fig_org[0]-fig_diag_len/2-fig_pad, fig_org[0]+fig_diag_len/2+fig_pad])
-    plt.ylim([fig_org[0]-fig_diag_len/2-fig_pad, fig_org[0]+fig_diag_len/2+fig_pad])
-    wq_plot_file_name='weightvsq.jpg'
-    wq_plot_file = os.path.join(t_dir, wq_plot_file_name)
-    plt.savefig(wq_plot_file, format='jpg')
-    # uncomment if you want to see detector pixels
-    # coloered as per weights
-    # plt.show()
+        plt.gca().add_patch(innercircle_out)
+        plt.gca().add_patch(innercircle_in)
+        fig_org=[(nx_det*dx_det)/2, (nx_det*dy_det)/2]
+        fig_diag_len=np.sqrt((nx_det*dx_det)**2+(ny_det*dy_det)**2)
+        fig_pad=0.05*fig_diag_len/2
+        plt.xlim([fig_org[0]-fig_diag_len/2-fig_pad, fig_org[0]+fig_diag_len/2+fig_pad])
+        plt.ylim([fig_org[0]-fig_diag_len/2-fig_pad, fig_org[0]+fig_diag_len/2+fig_pad])
+        wq_plot_file_name='weightvsq.jpg'
+        wq_plot_file = os.path.join(model_param_dir, wq_plot_file_name)
+        plt.savefig(wq_plot_file, format='jpg')
+        # uncomment if you want to see detector pixels
+        # coloered as per weights
+        plt.close()
 
     # combine intensity and weights
     Iq_total=Iq_cut*wq
