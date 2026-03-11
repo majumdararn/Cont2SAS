@@ -250,7 +250,11 @@ for i, t in enumerate(t_arr):
         # detailed version
         scatter_xml_file_name='scatter.xml'
         scatter_xml_file=os.path.join(scatt_dir,scatter_xml_file_name)
-        qclean_sld=scatt.qclean_sld(sim_model, xml_folder)
+        if scatt.qclean_sld_type(sim_model, xml_folder) is True:
+            qclean_sld=scatt.qclean_sld(sim_model, xml_folder)
+        else:
+            cal_mode=scatt.qclean_sld_type(sim_model, xml_folder)
+            qclean_sld=scatt.qclean_sld_cal(node_sld, cal_mode)
         scatt.scattxml_gen(scatter_xml_file, signal_file,scan_vector,
                             start_length, end_length, num_points,
                               resolution_num, qclean_sld, length_a, length_b, length_c, mid_point)

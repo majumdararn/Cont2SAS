@@ -474,3 +474,31 @@ def qclean_sld(model, xml_dir):
     tree=ET.parse(model_xml)
     root = tree.getroot()
     return float(root.find('qclean_sld').text)
+
+def qclean_sld_type(model, xml_dir):
+    """
+    func desc:
+    check qclean sld is number or command
+    """
+    model_xml_name=f'model_{model}.xml'
+    model_xml=os.path.join(xml_dir, model_xml_name)
+    tree=ET.parse(model_xml)
+    root = tree.getroot()
+    try:
+        value = float(root.find('qclean_sld').text)
+        return True
+    except ValueError:
+        return root.find('qclean_sld').text
+    
+def qclean_sld_cal(sim_sld, mode):
+    """
+    func desc:
+    calculate qclean sld from simulation
+    """
+    if mode=='average':
+        qclean_sld_calc=np.average(sim_sld)
+        print('qclean sld is calculated as the average of all node slds')
+        print(f'Calculated qclean sld is {qclean_sld_calc}')
+    else:
+        print('wrong cal mode for qclean calculation')
+    return qclean_sld_calc
