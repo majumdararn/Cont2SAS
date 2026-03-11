@@ -323,6 +323,35 @@ def model_phase_field_xml_write(xml_dir, name, time, qclean_sld):
 
     print("model_phase_field xml file created successfully!")
 
+# write model_chemevo.xml file
+def model_chemevo_xml_write(xml_dir, mode, rad, sld_start,
+                             sld_end, sld_env, d_coeff, qclean_sld):
+    """
+    xml structure for creating model_chemevo.xml
+    """
+    # Create the root element
+    root = ET.Element("root")
+
+    # details for simulation box
+    ET.SubElement(root, "mode").text=str(mode)
+    ET.SubElement(root, "rad").text=str(rad)
+    ET.SubElement(root, "sld_start").text=str(sld_start)
+    ET.SubElement(root, "sld_end").text=str(sld_end)
+    ET.SubElement(root, "sld_env").text=str(sld_env)
+    ET.SubElement(root, "d_coeff").text=str(d_coeff)
+    ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
+
+    # Convert to a string and format
+    xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
+
+    # Save to a file
+    xml_file_name='model_chemevo.xml'
+    xml_file=os.path.join(xml_dir, xml_file_name)
+    formatted_xml = parseString(xml_str).toprettyxml(indent="  ")
+
+    with open(xml_file, "w", encoding="utf-8") as f:
+        f.write(formatted_xml)
+
 # write scatt_cal.xml file
 def scatt_cal_xml_write(xml_dir, num_cat, method_cat,
                          sassena_exe, mpi_procs, num_threads,
