@@ -293,8 +293,9 @@ def model_chemevo(nodes, midpoint, t, t_end):
             sim_sld [r**2 <= a**2] = c1
         else:
             if D_coeff*t<=0.1:
-                for i in enumerate(r):
+                for i, _ in enumerate(r):
                     series=0
+                    print(type(r))
                     if r[i] <=rad:
                         if r[i]==0:
                             for j in range(1,n):
@@ -309,8 +310,10 @@ def model_chemevo(nodes, midpoint, t, t_end):
                                 series+=erf((term_1-r[i])/term_2)-erf((term_1+r[i])/term_2)
                             sim_sld[i]=c1+(c0-c1)*(a/r[i]*series)
             else:
-                for i in enumerate(r):
+                for i, _ in enumerate(r):
                     series=0
+                    # print(i)
+                    # print(r[i])
                     if r[i] <=rad:
                         if r[i]==0:
                             for j in range(1,n):
