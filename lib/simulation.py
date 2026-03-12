@@ -398,7 +398,7 @@ def model_probsimu(nodes, midpoint, t, t_end):
     # calculation of chem percentage (takes time model into account)
     if time_model==0:
         # zeroth
-        chem_percentage=time_cons*t
+        chem_percentage=(1/t_end)*t
     elif time_model==1:
         # first
         chem_percentage=1-np.exp(-time_cons*t)
@@ -438,7 +438,9 @@ def adjust_hd(reac_mr_arr, reag_mr_arr,hd):
         print('Not doing hd exchange')
     else:
         print('Num of reactants does not match 6')
-        raise ValueError(f"Num of [reactants, reagents] has to be [3, 3] (no ft-ir) or [6, 9] (with ft-ir), not [{len(reac_mr_arr)}, {len(reag_mr_arr)}]")
+        raise ValueError(f"Num of [reactants, reagents] has to be [3, 3] (no ft-ir)\n"
+                         f"or [6, 9] (with ft-ir),\n"
+                         f"not [{len(reac_mr_arr)}, {len(reag_mr_arr)}]")
     # # adust reagents
     # if len(reag_mr_arr) == 9:
     #     #hd = P_bd4
@@ -454,7 +456,6 @@ def adjust_hd(reac_mr_arr, reag_mr_arr,hd):
     # else:
     #     print('Num of reactants does not match 9')
     #     raise ValueError(f"Num of reactants has to be 3 (no ft-ir) or 6 (with ft-ir), not {len(reac_mr_arr)}")
-    
     return reac_mr_arr, reag_mr_arr
 
 def adjust_mr_gas(reag_mr_arr,mr_gas):
