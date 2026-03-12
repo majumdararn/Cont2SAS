@@ -253,6 +253,7 @@ for i, t in enumerate(t_arr):
         if scatt.qclean_sld_type(sim_model, xml_folder) is True:
             qclean_sld=scatt.qclean_sld(sim_model, xml_folder)
         else:
+            print('qclean sld is not explicitly mentioned')
             cal_mode=scatt.qclean_sld_type(sim_model, xml_folder)
             qclean_sld=scatt.qclean_sld_cal(node_sld, cal_mode)
         scatt.scattxml_gen(scatter_xml_file, signal_file,scan_vector,

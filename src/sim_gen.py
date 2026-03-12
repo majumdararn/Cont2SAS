@@ -185,7 +185,7 @@ for i, t in enumerate(t_arr):
         plt.colorbar()
         angstrom_str=r'$\AA$'
         plt.title(f" time = {t:0>3}s \n emsemble step = {idx_ensem+1:0>3} \n z = {z_val}{angstrom_str}")
-        plt.savefig(plot_file_1, format='jpg', bbox_inches='tight')
+        plt.savefig(plot_file_1, format='jpg')
         ### add images of ensemble 1 for video
         if idx_ensem==0:
             images_1.append(imageio.imread(plot_file_1))
